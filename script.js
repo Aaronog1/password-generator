@@ -33,3 +33,44 @@ function getPasswordOptions() {
     includeSpecialChars: includeSpecialChars
   };
 }
+// Function for getting a random element from an array
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+// Function to generate password with user input
+function generatePassword() {
+  const options = getPasswordOptions();
+
+  if (!options) return ''; // Return an empty string if options are not selected
+
+  let characters = [];
+  let password = '';
+
+  if (options.includeLowerCase) {
+    characters = characters.concat(lowerCasedCharacters);
+  }
+  if (options.includeUpperCase) {
+    characters = characters.concat(upperCasedCharacters);
+  }
+  if (options.includeNumbers) {
+    characters = characters.concat(numericCharacters);
+  }
+  if (options.includeSpecialChars) {
+    characters = characters.concat(specialCharacters);
+  }
+
+  for (let i = 0; i < options.passwordLength; i++) {
+    password += getRandom(characters);
+  }
+
+  return password;
+}
+
+// Function to display generated password in the browser
+function writePassword() {
+  const password = generatePassword();
+  const passwordText = document.querySelector('#password');
+
+  passwordText.value = password;
+}
